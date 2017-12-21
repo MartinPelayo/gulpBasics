@@ -7,11 +7,11 @@ const imagemin = require('gulp-imagemin');
 const del = require('del');
 const connect = require('gulp-connect');
 
-gulp.task('clean', function() { //Delete everthing in dist folder
+gulp.task('clean', function() { //Delete dist folder
   return del('dist');
 });
 
-gulp.task('concatScripts', ['clean'], function() { //Concat and return scripts
+gulp.task('concatScripts', ['clean'], function() { //Concat, create maps and return scripts
   return gulp.src([
     'gulp-build-v1/js/circle/circle.js',
     'gulp-build-v1/js/circle/autogrow.js',
@@ -23,13 +23,13 @@ gulp.task('concatScripts', ['clean'], function() { //Concat and return scripts
   .pipe(gulp.dest('dist/scripts'));
 });
 
-gulp.task('minifyScripts', ['concatScripts'], function(){ //Uglify the scritps
+gulp.task('minifyScripts', ['concatScripts'], function(){ //Uglify the scripts and create dist copies
   gulp.src('dist/scripts/all.min.js')
     .pipe(uglify())
     .pipe(gulp.dest('dist/scripts'));
 });
 
-gulp.task('compileSass', ['clean'], function() { //compile and concat sass
+gulp.task('compileSass', ['clean'], function() { //Compile, create source maps, create dist compies and concat sass
   gulp.src('gulp-build-v1/sass/global.scss')
     .pipe(maps.init())
     .pipe(sass())
@@ -37,7 +37,7 @@ gulp.task('compileSass', ['clean'], function() { //compile and concat sass
     .pipe(gulp.dest('dist/styles'));
 });
 
-gulp.task('image', ['clean'], function() {
+gulp.task('image', ['clean'], function() {  //Optmize images and copy to dist/content folder
   gulp.src([
     'gulp-build-v1/images/1.jpg',
     'gulp-build-v1/images/2.jpg',
